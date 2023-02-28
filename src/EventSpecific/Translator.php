@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Engelsystem\EventSpecific;
 
 use Engelsystem\Helpers\Translation\Translator as EngelsystemTranslator;
@@ -7,34 +9,32 @@ use Engelsystem\Helpers\Translation\Translator as EngelsystemTranslator;
 class Translator extends EngelsystemTranslator
 {
     /** @var array */
-    protected $replacements = [
+    protected array $replacements = [
         // EN
-        'Angeltypes' => 'Daemontypes',
-        'angeltypes' => 'daemontypes',
-        'Angeltype'  => 'Daemontype',
-        'Angels'     => 'Daemons',
-        'angels'     => 'daemons',
-        'Angel'      => 'Daemon',
-        'Heaven'     => 'Hell',
-        'helpers'    => 'daemons',
-        'helper'     => 'daemon',
+        'Angeltypes' => 'Trolltypes',
+        'angeltypes' => 'trolltypes',
+        'Angeltype'  => 'Trolltype',
+        'Angels'     => 'Trolls',
+        'angels'     => 'trolls',
+        'Angel'      => 'Troll',
+        'Heaven'     => 'Troll Cave',
+        'helpers'    => 'trolls',
+        'helper'     => 'troll',
 
         // DE
-        'Engeltypen' => 'Dämonarten',
-        'Engeltyp'   => 'Dämonart',
-        'Engel'      => 'Dämonen',
-        'den Himmel' => 'die Hölle',
-        'Himmel'     => 'Hölle',
-        'Helfer'     => 'Dämonen',
+        'Engeltypen' => 'Trolltypen',
+        'Engeltyp'   => 'Trollatyp',
+        'Engel'      => 'Trolle',
+        'den Himmel' => 'die Trollhöhle',
+        'Himmel'     => 'Trollhöhle',
+        'Helfer'     => 'Trolle',
     ];
 
     /**
-     * @param string $text
      * @param array  $replace
      *
-     * @return mixed|string
      */
-    protected function replaceText(string $text, array $replace = [])
+    protected function replaceText(string $text, array $replace = []): mixed
     {
         $text = parent::replaceText($text, $replace);
 
