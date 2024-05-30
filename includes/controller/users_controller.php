@@ -5,6 +5,7 @@ use Engelsystem\Models\AngelType;
 use Engelsystem\Models\Shifts\ShiftEntry;
 use Engelsystem\Models\User\State;
 use Engelsystem\Models\User\User;
+use Engelsystem\Models\UserAngelType;
 use Engelsystem\ShiftCalendarRenderer;
 use Engelsystem\ShiftsFilter;
 use Illuminate\Database\Eloquent\Collection;
@@ -503,7 +504,7 @@ function user_ifsg_certificate_required_hint()
         if (
             $angeltype->requires_ifsg_certificate && !(
                 $user->license->ifsg_certificate || $user->license->ifsg_certificate_light
-            )
+            ) && !($user->userAngelTypes->where('id', $angeltype->id)->first()->pivot->confirm_user_id && $angeltype->restricted)
         ) {
             return sprintf(
                 __('angeltype.ifsg.required.info.here'),

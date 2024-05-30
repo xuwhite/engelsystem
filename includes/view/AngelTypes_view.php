@@ -239,7 +239,7 @@ function AngelType_view_buttons(
         if (
             config('ifsg_enabled') && $angeltype->requires_ifsg_certificate && !(
             $user->license->ifsg_certificate_light || $user->license->ifsg_certificate
-            )
+            ) && !($user->userAngelTypes->where('id', $angeltype->id)->first()->pivot->confirm_user_id && $angeltype->restricted)
         ) {
             error(__('angeltype.ifsg.required.info'));
         }
