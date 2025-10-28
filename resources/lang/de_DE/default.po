@@ -156,6 +156,9 @@ msgstr ""
 msgid "password.reset.title"
 msgstr "Passwort wiederherstellen"
 
+msgid "user.password.reset.success"
+msgstr "Passwortwiederherstellungsmail versendet"
+
 msgid "password.recovery.text"
 msgstr ""
 "Wir werden eine E-Mail mit einem Link schicken, mit dem du das Passwort "

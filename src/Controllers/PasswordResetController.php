@@ -23,6 +23,7 @@ class PasswordResetController extends BaseController
         'postReset'         => 'login',
         'resetPassword'     => 'login',
         'postResetPassword' => 'login',
+        'postUserReset'     => 'admin_user',
     ];
 
     public function __construct(
@@ -66,6 +67,17 @@ class PasswordResetController extends BaseController
         }
 
         return $this->showView('pages/password/reset-success', ['type' => 'email']);
+    }
+
+    public function postUserReset(Request $request): Response
+    {
+        $userId = $request->getAttribute('user_id');
+        $requestUser = User::findOrFail($userId);
+        $resetRequest = new Request();
+        $resetRequest->request->set('email', $requestUser->email);
+        $this->postReset($resetRequest);
+        $this->addNotification(__('user.password.reset.success'), NotificationType::INFORMATION);
+        return back();
     }
 
     public function resetPassword(Request $request): Response
