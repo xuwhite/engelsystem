@@ -32,6 +32,7 @@ class AngelTypesController extends BaseController
         protected Response $response,
         protected Config $config,
         protected Authenticator $auth,
+        protected AngelType $angelType,
         protected LoggerInterface $log,
     ) {
     }
@@ -54,6 +55,35 @@ class AngelTypesController extends BaseController
         return $this->response->withView(
             'pages/angeltypes/about',
             ['angeltypes' => $angeltypes]
+        );
+    }
+
+    public function index(): Response
+    {
+        $angelTypes = $this->angelType
+            ->with(['userAngelTypes' => function ($query): void {
+                $query->where('user_id', '=', auth()->user()->id);
+            }])
+            ->orderBy('name')
+            ->get()
+//            ->map(function ($angelType) {
+//                $angelType->setRelation(
+//                    'userAngelTypes',
+//                    empty($angelType->userAngelTypes->first()) ? $angelType->userAngelTypes->first() : $angelType->userAngelTypes->first()->pivot
+//                );
+//
+//                return $angelType;
+//            })
+        ;
+//        dd($angelTypes->first()->userAngelTypes->first()->pivot);
+//        dd($angelTypes->first()->userAngelTypes->pivot);
+
+        return $this->response->withView(
+            'pages/angeltypes/index',
+            [
+                'angelTypes' => $angelTypes,
+                'is_index' => true,
+            ]
         );
     }
 
