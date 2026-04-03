@@ -162,7 +162,7 @@ function heading($content, $number = 1)
  */
 function toolbar_pills($items)
 {
-    return '<ul class="nav nav-pills">' . join("\n", $items) . '</ul>';
+    return '<ul class="nav nav-pills gap-2">' . join("\n", $items) . '</ul>';
 }
 
 /**
@@ -176,12 +176,10 @@ function toolbar_pills($items)
  */
 function toolbar_item_link($href, $icon, $label, $active = false)
 {
-    return '<li class="nav-item">'
-        . '<a class="nav-link ' . ($active ? 'active" aria-current="page"' : '"') . ' href="' . $href . '">'
+    return '<a class="dropdown-item ' . ($active ? 'active" aria-current="page"' : '"') . ' href="' . $href . '">'
         . ($icon != '' ? '<span class="bi bi-' . $icon . '"></span> ' : '')
         . htmlspecialchars($label)
-        . '</a>'
-        . '</li>';
+        . '</a>';
 }
 
 function toolbar_dropdown_item(string $href, string $label, bool $active, ?string $icon = null): string
@@ -207,14 +205,14 @@ function toolbar_dropdown_item(string $href, string $label, bool $active, ?strin
 function toolbar_dropdown($label, $submenu, $active = false): string
 {
     $template = <<<EOT
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle{class}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+<div class="dropdown">
+    <a class="btn btn-primary dropdown-toggle{class}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         {label}
     </a>
-    <ul class="dropdown-menu">
+    <div class="dropdown-menu">
         {submenu}
-    </ul>
-</li>
+    </div>
+</div>
 EOT;
 
     return strtr(

@@ -58,22 +58,34 @@ class ShiftsFilterRenderer
             $toolbar[] = toolbar_dropdown($selected_day_formatted, $day_dropdown_items, true);
 
             if ($dashboardFilter) {
-                $toolbar[] = sprintf(
-                    '<li role="presentation"><a class="nav-link" href="%s">%s</a></li>',
+                $toolbar[] = button(
                     url('/public-dashboard', ['filtered' => true] + $dashboardFilter),
-                    icon('speedometer2') . __('Dashboard')
+                    icon('speedometer2') . __('Dashboard'),
+
                 );
+
+//                    sprintf(
+//                    '<li role="presentation"><a class="nav-link" href="%s">%s</a></li>',
+//                    url('/public-dashboard', ['filtered' => true] + $dashboardFilter),
+//                    icon('speedometer2') . __('Dashboard')
+//                );
             }
             if (!request('showFilledShifts') && !auth()->can('user_shifts_admin')) {
-                $toolbar[] = sprintf(
-                    '<li role="presentation"><a class="nav-link" href="%s">%s</a></li>',
+                $toolbar[] = button(
                     $page_link . '&showFilledShifts=1&showShiftsTab=1&shifts_filter_day=' . request('shifts_filter_day', $selected_day),
-                    icon('eye') . __('All')
+                    icon('eye') . __('Show all shifts')
+                );
+            } else {
+                $toolbar[] = button(
+                    $page_link . '&showShiftsTab=1&shifts_filter_day=' . $selected_day,
+                    icon('person-exclamation') . __('Show free shifts')
                 );
             }
         }
         return div('mb-3', [
-            toolbar_pills($toolbar),
+            toolbar_pills(
+                $toolbar
+            ),
         ]);
     }
 
