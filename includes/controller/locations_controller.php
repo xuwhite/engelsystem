@@ -33,9 +33,9 @@ function location_controller(): array
     }
 
     $shiftsFilter = new ShiftsFilter(
-        true,
         [$location->id],
-        AngelType::query()->get('id')->pluck('id')->toArray()
+        AngelType::query()->get('id')->pluck('id')->toArray(),
+        true,
     );
     $selected_day = date('Y-m-d');
     if (!empty($days) && !isset($days[$selected_day])) {

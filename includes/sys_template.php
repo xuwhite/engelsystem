@@ -165,24 +165,7 @@ function toolbar_pills($items)
     return '<ul class="nav nav-pills gap-2">' . join("\n", $items) . '</ul>';
 }
 
-/**
- * Render a link for a toolbar.
- *
- * @param string $href
- * @param string $icon
- * @param string $label
- * @param bool   $active
- * @return string
- */
-function toolbar_item_link($href, $icon, $label, $active = false)
-{
-    return '<a class="dropdown-item ' . ($active ? 'active" aria-current="page"' : '"') . ' href="' . $href . '">'
-        . ($icon != '' ? '<span class="bi bi-' . $icon . '"></span> ' : '')
-        . htmlspecialchars($label)
-        . '</a>';
-}
-
-function toolbar_dropdown_item(string $href, string $label, bool $active, ?string $icon = null): string
+function toolbar_dropdown_item(string $href, string $label, bool $active = false, ?string $icon = null): string
 {
     return strtr(
         '<li><a class="dropdown-item{active}" {aria} href="{href}">{icon} {label}</a></li>',
@@ -206,9 +189,9 @@ function toolbar_dropdown($label, $submenu, $active = false): string
 {
     $template = <<<EOT
 <div class="dropdown">
-    <a class="btn btn-primary dropdown-toggle{class}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <button class="btn btn-primary dropdown-toggle{class}" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         {label}
-    </a>
+    </button>
     <div class="dropdown-menu">
         {submenu}
     </div>

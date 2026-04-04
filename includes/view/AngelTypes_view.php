@@ -644,7 +644,7 @@ function AngelType_view_shifts(AngelType $angeltype, $shiftsFilterRenderer, $shi
     $shifts = $shiftsFilterRenderer->render(url('/angeltypes', [
         'action' => 'view',
         'angeltype_id' => $angeltype->id,
-    ]), ['type' => $angeltype->id]);
+    ]), ['type' => $angeltype->id], auth()->can('user_shifts_admin') || auth()->user()->isAngelTypeSupporter($angeltype));
     $shifts .= $shiftCalendarRenderer->render();
 
     return div('first', $shifts);

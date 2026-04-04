@@ -41,10 +41,11 @@ class ShiftsFilterRenderer
      *
      * @param string $page_link Link pointing to the actual page.
      * @param array  $dashboardFilter
+     * @param bool   $showAll Show all shifts by default
      *
      * @return string Generated HTML
      */
-    public function render($page_link, $dashboardFilter = [])
+    public function render($page_link, $dashboardFilter = [], $showAll=false)
     {
         $toolbar = [];
         if ($this->daySelectionEnabled && !empty($this->days)) {
@@ -53,7 +54,7 @@ class ShiftsFilterRenderer
             $day_dropdown_items = [];
             foreach ($this->days as $value => $day) {
                 $link = $page_link . '&shifts_filter_day=' . $value;
-                $day_dropdown_items[] = toolbar_item_link($link, '', $day);
+                $day_dropdown_items[] = toolbar_dropdown_item($link, $day);
             }
             $toolbar[] = toolbar_dropdown($selected_day_formatted, $day_dropdown_items, true);
 
@@ -61,23 +62,16 @@ class ShiftsFilterRenderer
                 $toolbar[] = button(
                     url('/public-dashboard', ['filtered' => true] + $dashboardFilter),
                     icon('speedometer2') . __('Dashboard'),
-
                 );
-
-//                    sprintf(
-//                    '<li role="presentation"><a class="nav-link" href="%s">%s</a></li>',
-//                    url('/public-dashboard', ['filtered' => true] + $dashboardFilter),
-//                    icon('speedometer2') . __('Dashboard')
-//                );
             }
-            if (!request('showFilledShifts') && !auth()->can('user_shifts_admin')) {
+            if (!request('showFilledShifts', $showAll)) {
                 $toolbar[] = button(
                     $page_link . '&showFilledShifts=1&showShiftsTab=1&shifts_filter_day=' . request('shifts_filter_day', $selected_day),
                     icon('eye') . __('Show all shifts')
                 );
             } else {
                 $toolbar[] = button(
-                    $page_link . '&showShiftsTab=1&shifts_filter_day=' . $selected_day,
+                    $page_link . '&showFilledShifts=0&showShiftsTab=1&shifts_filter_day=' . $selected_day,
                     icon('person-exclamation') . __('Show free shifts')
                 );
             }

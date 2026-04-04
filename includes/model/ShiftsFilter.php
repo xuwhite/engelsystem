@@ -43,16 +43,16 @@ class ShiftsFilter
     /**
      * ShiftsFilter constructor.
      *
-     * @param bool  $user_shifts_admin
      * @param int[] $locations
      * @param int[] $angelTypes
+     * @param bool  $user_shifts_admin
      * @param ?int $tag
      */
     public function __construct(
-        $user_shifts_admin = false,
         private $locations = [],
         $angelTypes = [],
-        private $tag = null
+        $user_shifts_admin = false,
+        private $tag = null,
     ) {
         $this->types = $angelTypes;
 

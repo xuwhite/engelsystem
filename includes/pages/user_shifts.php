@@ -275,7 +275,7 @@ function view_user_shifts()
 
     if (!$session->has('shifts-filter')) {
         $location_ids = $locations->pluck('id')->toArray();
-        $shiftsFilter = new ShiftsFilter(auth()->can('user_shifts_admin'), $location_ids, $ownAngelTypes);
+        $shiftsFilter = new ShiftsFilter( $location_ids, $ownAngelTypes, auth()->can('user_shifts_admin'));
         $session->set('shifts-filter', $shiftsFilter->sessionExport());
     }
 
