@@ -536,6 +536,9 @@ msgstr "Ausgegebene T-Shirts"
 msgid "Configured T-shirts"
 msgstr "Konfigurierte T-Shirts"
 
+msgid "Reserved Goodies"
+msgstr "Reservierte Goodies"
+
 msgid "Arrive angels"
 msgstr "Ankommende Engel"
 
