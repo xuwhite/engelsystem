@@ -27,6 +27,7 @@ class AddReservedGoodieBy extends Migration
     public function down(): void
     {
         $this->schema->table('users_state', function (Blueprint $table): void {
+            $table->dropForeign(['reserved_goodie_by']);
             $table->dropColumn('reserved_goodie_by');
         });
     }

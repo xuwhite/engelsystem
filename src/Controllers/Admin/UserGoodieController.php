@@ -101,9 +101,6 @@ class UserGoodieController extends BaseController
         }
 
         $user->state->active = (bool) $data['active'];
-        if ($user->state->got_goodie != (bool) $data['got_goodie']) {
-            $user->state->got_goodie_by = $data['got_goodie'] ? $this->auth->user()->id : null;
-        }
         if (
             config('enable_reserved_goodie')
             && $user->state->reserved_goodie != (bool) $data['reserved_goodie']
@@ -111,6 +108,9 @@ class UserGoodieController extends BaseController
             && !$data['got_goodie']
         ) {
             $user->state->reserved_goodie_by = $data['reserved_goodie'] ? $this->auth->user()->id : null;
+        }
+        if ($user->state->got_goodie != (bool) $data['got_goodie']) {
+            $user->state->got_goodie_by = $data['got_goodie'] ? $this->auth->user()->id : null;
         }
         $user->state->save();
 
@@ -124,8 +124,8 @@ class UserGoodieController extends BaseController
                 'size'      => $user->personalData->shirt_size,
                 'arrived'   => $user->state->arrived ? 'yes' : 'no',
                 'active'    => $user->state->active ? 'yes' : 'no',
-                'got_goodie' => $user->state->got_goodie ? 'yes' : 'no',
                 'reserved_goodie' => config('enable_reserved_goodie') && $user->state->reserved_goodie ? 'yes' : 'no',
+                'got_goodie' => $user->state->got_goodie ? 'yes' : 'no',
             ]
         );
 

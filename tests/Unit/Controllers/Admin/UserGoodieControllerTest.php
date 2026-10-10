@@ -109,12 +109,12 @@ class UserGoodieControllerTest extends ControllerTestCase
 
         $user = User::find(1);
         $auth
-            ->expects($this->exactly(6))
+            ->expects($this->exactly(7))
             ->method('can')
             ->with('admin_arrive')
-            ->willReturnOnConsecutiveCalls(true, true, false, false, true, true);
+            ->willReturnOnConsecutiveCalls(true, true, true, false, false, true, true);
         $this->setExpects($auth, 'user', null, $user, $this->any());
-        $this->setExpects($redirector, 'back', null, $this->response, $this->exactly(6));
+        $this->setExpects($redirector, 'back', null, $this->response, $this->exactly(7));
 
         $controller = new UserGoodieController(
             $auth,
@@ -138,14 +138,26 @@ class UserGoodieControllerTest extends ControllerTestCase
         $this->assertFalse($user->state->got_goodie);
         $this->assertFalse($user->state->reserved_goodie);
 
+        // Set reserved
+        $request = $request
+            ->withParsedBody([
+                'shirt_size' => 'S',
+                'reserved_goodie' => '1',
+            ]);
+
+        $controller->saveGoodie($request);
+
+        $user = User::find(1);
+
+        $this->assertTrue($user->state->reserved_goodie);
+
         // Set active, arrived and got_goodie
         $request = $request
             ->withParsedBody([
                 'shirt_size' => 'S',
                 'arrived'    => '1',
                 'active'     => '1',
-                'got_goodie'  => '1',
-                'reserved_goodie' => '1',
+                'got_goodie' => '1',
             ]);
 
         $controller->saveGoodie($request);
