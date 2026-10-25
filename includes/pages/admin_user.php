@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Engelsystem\Config\GoodieType;
+use Engelsystem\Http\Exceptions\HttpForbidden;
 use Engelsystem\Http\Validation\Rules\Username;
 use Engelsystem\Models\Group;
 use Engelsystem\Models\User\User;
@@ -43,6 +44,9 @@ function admin_user()
         if (!$user_source) {
             error(__('This user does not exist.'));
             throw_redirect(users_link());
+        }
+        if ($user->getHighestGroup() >= $user_source->getHighestGroup()) {
+            throw new HttpForbidden();
         }
 
         $html .= __('Here you can change the user entry. Under the item \'Arrived\' the angel is marked as present, a yes at Active means that the angel was active.');
